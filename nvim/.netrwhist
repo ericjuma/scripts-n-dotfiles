@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
-let g:netrw_dirhist_3='/usr/lib/python3.8/site-packages/pywal'
-let g:netrw_dirhist_2='/home/mimi/projects/autoscrot/autoscrot/__pycache__'
-let g:netrw_dirhist_1='/home/mimi/heet/laufcalc'
