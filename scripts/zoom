@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export XDG_SESSION_TYPE=c11
+export XDG_SESSION_TYPE=x11
 export QT_QPA_PLATFORM=xcb
 export GDK_BACKEND=xcb
 zoom
