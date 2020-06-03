@@ -1,0 +1,17 @@
+#!/bin/bash
+source ~/.cache/wal/colors.sh
+qutebrowser "https://start.duckduckgo.com/\
+?kl=us-en\
+&kp=-1\
+&k1=-1\
+&kam=osm\
+&kt=monospace\
+&km=m\
+&k5=2\
+&k7=$background\
+&kx=$color3\
+&kj=$background\
+&kaa=$color6\
+&kae=d\
+&k9=$foreground"
+

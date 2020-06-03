@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/music/$1
+collectiongain .
+mpv --shuffle --no-video .

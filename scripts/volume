@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ "$1" == "mute" ]
+then
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+else
+    pactl set-sink-volume @DEFAULT_SINK@ $1
+fi
+makoctl dismiss
+notify-send -t 2000 "$(pamixer --get-volume)"

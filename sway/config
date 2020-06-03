@@ -1,0 +1,237 @@
+#  / __\ \ /\ / / _` | | | |  #
+#  \__ \\ V  V / (_| | |_| |  #
+#  |___/ \_/\_/ \__,_|\__, |  #
+#                     |___/   #
+
+include "$HOME/.cache/wal/colors-sway"
+
+default_border normal 0px
+titlebar_border_thickness 0
+titlebar_padding 0 5
+font monospace 0
+
+# wal colors to be used
+set {
+    $c1 $color6
+    $c2 $color8
+    $fg $foreground
+    $bg $background
+}
+
+#  class                border  background  text    inic    childbor
+client.focused          $c1 $c1 $c1 $c1 $c1 
+client.focused_inactive $c2 $c2 $c1 $bg $bg 
+client.unfocused        $c2 $c2 $c1 $bg $bg
+# client.urgent           #000000 #000000 #000000 #000000 #000000
+# client.placeholder      #000000 #000000 #000000 #000000 #000000 
+# client.background       #000000
+
+# basic unchanging keys
+set {
+    $mod Mod4
+    $left h
+    $right l
+    $down j
+    $up k
+
+    $term kitty
+    $menu MOZ_ENABLE_WAYLAND=1 wofi --show=run
+}
+
+# application launchers
+bindsym {
+    $mod+semicolon exec $term
+    $mod+n exec "kitty --session ~/.config/kitty/nvim.conf"
+    $mod+return exec "kitty --session ~/.config/kitty/ranger.conf"
+
+    $mod+d exec $menu
+
+    $mod+shift+f exec qutebrowser
+
+    $mod+ctrl+c exec makoctl dismiss
+}
+
+# number keys
+bindsym {
+    $mod+0 exec "theme set dark"
+    $mod+shift+0 exec "theme set light"
+    $mod+ctrl+0 exec "theme set best-dark"
+    $mod+ctrl+shift+0 exec "theme set best-light"
+    $mod+shift+hyphen exec "notify-send hi"
+    $mod+ctrl+equal exec "theme delete"
+
+    $mod+9 exec "theme-wall rand"
+    $mod+shift+9 exec "theme-wall grey"
+    $mod+ctrl+9 exec "theme-wall bg"
+
+    #$mod+8 exec "swaymsg gaps top all set 5; waybar"
+    $mod+8 exec "waybar & sleep 5; pkill waybar"
+    $mod+shift+8 exec "swaymsg gaps top all set 0; pkill waybar"
+
+    $mod+4 exec "nordvpn connect && nordvpn set killswitch enabled"
+    $mod+shift+4 exec "nordvpn set killswitch disabled; nordvpn disconnect"
+
+    $mod+2 exec bedtimed
+    $mod+1 output DP-1 toggle; output DP-3 toggle
+}
+
+# function keys
+bindsym {
+    XF86AudioRaiseVolume exec "volume +10%"
+    XF86AudioLowerVolume exec "volume -10%"
+    XF86AudioMute exec "volume mute"
+
+    XF86AudioPlay exec "pauseplay"
+    $mod+F4 exec "mpvseek"
+
+    XF86MonBrightnessDown exec "brightnessctl -e set 10%-"
+    XF86MonBrightnessUp exec "brightnessctl -e set +10%"
+
+    Print exec "scrt"
+    $mod+Print exec "scrt-select"
+
+    Insert exec "swaylock"
+}
+
+bindsym {
+    $mod+q kill
+    $mod+f fullscreen
+
+    $mod+g gaps inner current plus 6
+    $mod+shift+g gaps inner current minus 6
+
+    $mod+c splith
+    $mod+v splitv
+
+    $mod+s layout stacking
+    $mod+w layout tabbed
+    $mod+e layout toggle split
+
+    $mod+space focus mode_toggle
+    $mod+shift+space floating toggle
+
+    $mod+a focus parent
+
+    $mod+shift+c reload
+    $mod+shift+e exec swaynag -t warning -m 'exit sway?' -b 'yes' 'swaymsg exit'
+}
+
+# Note: swaymsg -t get_inputs, man 5 sway-input
+output {
+    eDP-1 scale 2 pos 0 0
+    DP-1 scale 2 pos 0 -1080
+    DP-3 scale 2 pos 0 -1080
+     # DP-3 scale 1 pos 0 2400
+}
+
+exec {
+    redshift
+    bedtimed
+    # nordvpn connect; nordvpn set killswitch enabled
+}
+
+input type:touchpad {
+    # dwt enabled
+    tap enabled
+    # natural_scroll enabled
+    # middle_emulation enabled
+}
+
+input type:keyboard {
+    xkb_options caps:swapescape,altwin:swap_lalt_lwin,ctrl:ralt_rctrl
+}
+
+floating_modifier $mod normal
+
+set {
+    $ws1 1:一
+    $ws2 2:二
+    $ws3 3:三
+    $ws4 4:四
+   
+    $ws11 5:壹
+    $ws22 6:貳
+    $ws33 7:參
+    $ws44 8:肆
+}
+
+bindsym {
+
+    $mod+u workspace $ws1
+    $mod+i workspace $ws2
+    $mod+o workspace $ws3
+    $mod+p workspace $ws4
+
+    $mod+shift+u move container to workspace $ws1; workspace $ws1
+    $mod+shift+i move container to workspace $ws2; workspace $ws2
+    $mod+shift+o move container to workspace $ws3; workspace $ws3
+    $mod+shift+p move container to workspace $ws4; workspace $ws4
+
+    $mod+ctrl+u workspace $ws11
+    $mod+ctrl+i workspace $ws22
+    $mod+ctrl+o workspace $ws33
+    $mod+ctrl+p workspace $ws44
+
+    $mod+ctrl+shift+u move container to workspace $ws11; workspace $ws11
+    $mod+ctrl+shift+i move container to workspace $ws22; workspace $ws22
+    $mod+ctrl+shift+o move container to workspace $ws33; workspace $ws33
+    $mod+ctrl+shift+p move container to workspace $ws44; workspace $ws44
+
+    $mod+b workspace back_and_forth
+    $mod+shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+    $mod+shift+minus move scratchpad
+    $mod+minus scratchpad show
+}
+
+workspace {
+    $ws1 output DP-1
+    $ws2 output DP-1
+    $ws3 output DP-1
+    $ws4 output DP-1
+    $ws11 output eDP-1
+    $ws22 output eDP-1
+    $ws33 output eDP-1
+    $ws44 output eDP-1
+}
+
+for_window [class="gvim"] floating enable
+
+gaps {
+    outer 0
+    inner 16
+    top 0
+}
+
+mode "resize" {
+    bindsym {
+        $left resize shrink width 120px
+        $down resize grow height 120px
+        $up resize shrink height 120px
+        $right resize grow width 120px
+
+        Return mode "default"
+        Escape mode "default"
+    }
+}
+bindsym $mod+r mode "resize"
+
+bar {
+    #swaybar_command waybar
+}
+
+bindsym {
+    $mod+$left focus left
+    $mod+$down focus down
+    $mod+$up focus up
+    $mod+$right focus right
+
+    $mod+shift+$left move left
+    $mod+shift+$down move down
+    $mod+shift+$up move up
+    $mod+shift+$right move right
+}
+
+exec_always "theme-wall grey"
+
+include /etc/sway/config.d/*

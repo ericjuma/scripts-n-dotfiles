@@ -1,0 +1,35 @@
+#!/usr/bin/python
+import subprocess as sb
+from functools import lru_cache as cache
+
+@cache
+def redshift_brightness():
+    # get stdout from redshift
+    cmd = ['redshift', '-p', '-b', '1:0.1']
+    process = sb.run(cmd, check=True, stdout=sb.PIPE, universal_newlines=True)
+    output = process.stdout
+    # get redshift's opinion on what the brightness percent should be
+    return float(output.split('Brightness: ')[-1][:4]) * 100
+
+@cache
+def ideal_brightness():
+    r = redshift_brightness()
+    x = -10
+    return int((r - x) * (100/(100 - x)))
+
+@cache
+def set_brightness(n):
+    sb.run(f'brightnessctl -q set {n}%'.split(' '))
+
+@cache
+def current_brightness():
+    out = sb.check_output(['brightnessctl', '-q']).decode('utf-8')
+    return float(
+        out.split('(')[-1].split('%')[0]
+    )
+
+if current_brightness() > ideal_brightness():
+    print("redshift brightness: {}".format(redshift_brightness()))
+    print("current brightness: {}".format(current_brightness()))
+    print("ideal brightness: {}".format(ideal_brightness()))
+    set_brightness(ideal_brightness())

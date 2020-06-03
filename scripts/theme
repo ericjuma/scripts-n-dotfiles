@@ -1,0 +1,160 @@
+#!/bin/python
+
+import pywal as wal
+import pathlib
+from sys import argv
+import shutil
+import os
+import random
+from pathlib import Path
+import pdb
+
+
+def assert_valid_theme(t):
+    assert type(t) == str
+    assert Path(t).exists()
+
+def theme_name(theme):
+    assert type(theme) == str
+    return theme.split('/')[-1][:-5]
+
+def notify(text):
+    os.system(f"notify-send -t 10000 '{text}'")
+
+def cachepath(new_file_relative_path=''):
+    assert type(new_file_relative_path) == str
+    return os.path.expanduser('~/.cache/wal/' + new_file_relative_path)
+
+def themepath(theme=''):
+    assert type(theme) == str
+    return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
+
+def pick_random_theme(theme_type):
+    assert type(theme_type) == str
+
+    possible_themes = Path(themepath()).rglob(f'{theme_type}/*.json')
+    chosen_theme = str(random.choice(list(possible_themes)))
+
+    assert_valid_theme(chosen_theme)
+    return chosen_theme
+    
+def record_theme_path(theme_path):
+    assert_valid_theme(theme_path)
+    with open(cachepath('colors.path'), 'w') as f:
+        f.write(theme_path)
+
+def get_current_theme_path():
+    with open(cachepath('colors.path')) as f:
+        path = f.readline()
+    assert_valid_theme(path)
+    return path
+
+def set_wallpaper(color):
+    assert(color in ['rand', 'bg', 'grey'])
+    os.system(f'theme-wall {color}')
+
+def apply_theme(colors):
+    assert type(colors) == dict
+    wal.sequences.send(colors)
+    wal.export.every(colors)
+    wal.reload.env()
+    set_wallpaper('bg')
+
+def set_theme(theme_type):
+    assert type(theme_type) == str
+
+    theme_path = pick_random_theme(theme_type)
+    print(f'Theme path: {theme_path}')
+
+    assert_valid_theme(theme_path)
+    record_theme_path(theme_path)
+
+    theme_colors = wal.colors.file(theme_path)
+    apply_theme(theme_colors)
+    notify('theme set: {}'.format(theme_name(theme_path)))
+
+    exit(0)
+
+def delete_theme(theme_path):
+    assert_valid_theme(theme_path)
+    parts = theme_path.split('/')
+    parts[-2] = 'trash'
+    new_path = '/'.join(parts)
+    shutil.move(theme_path, new_path)
+
+def delete_current_theme():
+    t = get_current_theme_path()
+    delete_theme(t)
+    notify('theme deleted: {}'.format(theme_name(t)))
+    exit(0)
+
+def appreciate_theme(theme_path):
+    assert_valid_theme(theme_path)
+    parts = theme_path.split('/')
+    parts[-2] = 'best-' + parts[-2]
+    new_path = '/'.join(parts)
+    shutil.copyfile(theme_path, new_path)
+
+def appreciate_current_theme():
+    t = get_current_theme_path()
+    appreciate_theme(t)
+    notify('theme appreciated: {}'.format(theme_name(t)))
+    exit(0)
+
+def get_theme(arg):
+    path = get_current_theme_path()
+    if arg == 'mode':
+        category = path.split('/')[-2]
+        unappreciated = category.split('best-')[-1]
+        print(unappreciated)
+    elif arg == 'name':
+        print(theme_name(path))
+    elif arg == 'path':
+        print(path)
+    elif arg == 'colors':
+        print(wal.colors.file(path))
+    else:
+        return
+    exit(0)
+
+
+def print_help():
+    print('\n'.join([
+        "Commands:",
+        "",
+        "set <dir>",
+        "    this chooses a random colorscheme",
+        "    from the <dir> directory",
+        "",
+        "delete",
+        "   this moves the current theme to the trash",
+        "   directory in colorschemes",
+        "",
+        "appreciate",
+        "   this moves the current theme, say,",
+        "   '...colorschemes/dark/the.json' to",
+        "   '...colorschemes/best-dark/the.json'",
+        "",
+        "get",
+        "   mode, name path, or colors",
+    ]))
+
+def main():
+    main_command = argv[1]
+    arg_map = {
+        "set": set_theme,
+        "delete": delete_current_theme,
+        "appreciate": appreciate_current_theme,
+        "help": print_help,
+        "get": get_theme
+    }
+    if len(argv) > 2:
+        arg_map[main_command](argv[2])
+    else:
+        arg_map[main_command]()
+    print_help()
+    exit(1)
+
+
+if __name__ == "__main__":
+    main()

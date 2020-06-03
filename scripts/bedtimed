@@ -1,0 +1,21 @@
+#!/usr/bin/python
+from datetime import date, datetime, timedelta, time
+from time import sleep
+import subprocess
+
+def bedtime(start: date) -> str:
+    now = date.today()
+    days = (now - start).days
+    bedtime = datetime(1,1,1,3,0,0) - timedelta(hours=0, minutes=days * 5)
+    return str(bedtime.time())[:5]
+
+while True:
+    start = date(2020, 5, 20)
+    bed = bedtime(start)
+
+    now = str(datetime.now().time())[:5]
+    print(f"now: {now}, bedtime: {bed}")
+
+    if now == bed:
+        subprocess.run('bedtime')
+    sleep(50)

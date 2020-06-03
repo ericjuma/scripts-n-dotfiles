@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $(pgrep mpv) ]
+then
+    echo '{"command": ["cycle", "pause"]}' | socat - /tmp/mpvsocket
+else
+    playerctl play-pause
+fi

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+notify-send -t 1000000 "bedtime!"
+
+while [ "$(brightnessctl get)" != "0" ]
+do
+    sleep 0.01
+    brightnessctl set -e 30- &
+done
+
+brightnessctl set 0
+swaymsg output DP-1 disable
+swaymsg output DP-3 disable
+swaylock -c "88888888"
+brightnessctl set 100%
+swaymsg output DP-3 enable
+swaymsg output DP-1 enable
