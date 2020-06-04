@@ -113,6 +113,8 @@ def get_theme(arg):
         print(path)
     elif arg == 'colors':
         print(wal.colors.file(path))
+    elif arg == 'dirs':
+        os.system('ls --color=auto ~/.config/wal/colorschemes')
     else:
         return
     exit(0)
@@ -136,7 +138,7 @@ def print_help():
         "   '...colorschemes/best-dark/the.json'",
         "",
         "get",
-        "   mode, name path, or colors",
+        "   mode, name, path, colors, dirs",
     ]))
 
 def main():

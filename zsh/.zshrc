@@ -10,12 +10,6 @@ export ZSH="$ZDOTDIR/oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="random"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -24,7 +18,7 @@ ZSH_THEME="random"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -134,28 +128,26 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
-# Change cursor shape for different vi modes.
-# function zle-keymap-select {
-#     if [[ ${KEYMAP} == vicmd ]] ||
-#            [[ $1 = 'block' ]]; then
-#         echo -ne '\e[1 q'
-#     elif [[ ${KEYMAP} == main ]] ||
-#              [[ ${KEYMAP} == viins ]] ||
-#              [[ ${KEYMAP} = '' ]] ||
-#              [[ $1 = 'beam' ]]; then
-#         echo -ne '\e[5 q'
-#     fi
-# }
-#zle -N zle-keymap-select
-#zle-line-init() {
-#    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-#    echo -ne "\e[5 q"
-#}
-#zle -N zle-line-init
-#echo -ne '\e[5 q' # Use beam shape cursor on startup.
-#preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
-
-# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+ # Change cursor shape for different vi modes.
+ function zle-keymap-select {
+     if [[ ${KEYMAP} == vicmd ]] ||
+            [[ $1 = 'beam' ]]; then
+         echo -ne '\e[4 q'
+     elif [[ ${KEYMAP} == main ]] ||
+              [[ ${KEYMAP} == viins ]] ||
+              [[ ${KEYMAP} = '' ]] ||
+              [[ $1 = 'block' ]]; then
+         echo -ne '\e[1 q'
+     fi
+ }
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[1 q"
+}
+zle -N zle-line-init
+echo -ne '\e[1 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[1 q' ;} # Use beam shape cursor for each new prompt.
 
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -165,15 +157,6 @@ alias ra="ranger"
 path+=("$HOME/.local/bin")
 path+=("$HOME/scripts")
 export PATH
-
-# PATH="/home/mimi/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/home/mimi/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/home/mimi/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/home/mimi/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/home/mimi/perl5"; export PERL_MM_OPT;
-#
-# ~/.bashrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -206,7 +189,8 @@ ranger() {
 alias vix="touch $1; chmod +x $1; vim $1"
 alias zs="vim $ZDOTDIR/.zshrc; . $ZDOTDIR/.zshrc"
 alias zz=".$ZDOTDIR/.zshrc"
-alias dzt="rm $ZDOTDIR/oh-my-zsh/themes/$RANDOM_THEME.zsh-theme; zsh"
+alias dzt="rm $ZDOTDIR/oh-my-zsh/custom/themes/$RANDOM_THEME.zsh-theme; clear; zsh"
 alias p8="ping 8.8.8.8"
 alias python='python3'
 alias gs="git status"
+export KEYTIMEOUT=1
