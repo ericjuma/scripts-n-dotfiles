@@ -803,9 +803,25 @@ c.completion.scrollbar.width = 0
 
 ## List of user stylesheet filenames to use.
 ## Type: List of File, or File
-css_dir = '~/.config/qutebrowser/css/'
-#c.content.user_stylesheets = [css_dir + 'solarized-everything-css/css/darculized/darculized-all-sites.css']
-
+"""
+css_dir = '~/.config/qutebrowser/css/solar/'
+c.content.user_stylesheets = ['~/.cache/wal/colors.css'] + [css_dir + f for f in [
+        'solarized-dark-all-sites.css',
+        'solarized-dark-bigblow.css',
+        'solarized-dark-disqus.com.css',
+        'solarized-dark-generic.css',
+        'solarized-dark-github.css',
+        'solarized-dark-google.com.css',
+        'solarized-dark-lwn.net.css',
+        'solarized-dark-mediawiki.org.css',
+        'solarized-dark-news.ycombinator.com.css',
+        'solarized-dark-planet.emacsen.org.css',
+        'solarized-dark-reddit.com.css',
+        'solarized-dark-sakai.css',
+        'solarized-dark-stackexchange.com.css'
+    ]
+]
+"""
 ## Enable WebGL.
 ## Type: Bool
 # c.content.webgl = True
