@@ -23,7 +23,7 @@ set autoindent
 set wildmenu
 set sidescrolloff=1
 set nowrap
-set scrolloff=8
+set scrolloff=4
 syntax on
 filetype plugin indent on
 let mapleader="\<Space>"

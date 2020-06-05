@@ -62,7 +62,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git last-working-dir colored-man-pages thefuck zsh-syntax-highlighting zsh-interactive-cd)
+plugins=(git colored-man-pages thefuck zsh-syntax-highlighting zsh-interactive-cd)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -194,3 +194,4 @@ alias p8="ping 8.8.8.8"
 alias python='python3'
 alias gs="git status"
 export KEYTIMEOUT=1
+export CARGO_HOME=$HOME/.config/cargo

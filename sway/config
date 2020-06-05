@@ -12,7 +12,7 @@ font monospace 0
 
 # wal colors to be used
 set {
-    $c1 $color6
+    $c1 $color5
     $c2 $color8
     $fg $foreground
     $bg $background
@@ -97,8 +97,8 @@ bindsym {
     $mod+q kill
     $mod+f fullscreen
 
-    $mod+g gaps inner current plus 6
-    $mod+shift+g gaps inner current minus 6
+    $mod+g gaps inner current plus 5
+    $mod+shift+g gaps inner current minus 5
 
     $mod+c splith
     $mod+v splitv
