@@ -71,3 +71,4 @@ nnoremap <esc>m :term<cr>
 
 " let g:python_highlight_all = 1
 set clipboard=unnamedplus
+nnoremap <leader><Space> :nohlsearch<CR>

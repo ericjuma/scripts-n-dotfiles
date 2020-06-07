@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo '{"command": ["seek", "120"]}' | socat - /tmp/mpvsocket
+echo '{"command": ["seek", "300"]}' | socat - /tmp/mpvsocket

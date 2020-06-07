@@ -25,11 +25,12 @@ def cachepath(new_file_relative_path=''):
     assert type(new_file_relative_path) == str
     return os.path.expanduser('~/.cache/wal/' + new_file_relative_path)
 
-def themepath(theme=''):
-    assert type(theme) == str
-    return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
-
 def pick_random_theme(theme_type):
+
+    def themepath(theme=''):
+        assert type(theme) == str
+        return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
+
     assert type(theme_type) == str
 
     possible_themes = Path(themepath()).rglob(f'{theme_type}/*.json')
@@ -54,11 +55,12 @@ def set_wallpaper(color):
     os.system(f'theme-wall {color}')
 
 def apply_theme(colors):
+
     assert type(colors) == dict
     wal.sequences.send(colors)
     wal.export.every(colors)
+    # set_wallpaper('bg')
     wal.reload.env()
-    set_wallpaper('bg')
 
 def set_theme(theme_type):
     assert type(theme_type) == str
@@ -75,14 +77,15 @@ def set_theme(theme_type):
 
     exit(0)
 
-def delete_theme(theme_path):
-    assert_valid_theme(theme_path)
-    parts = theme_path.split('/')
-    parts[-2] = 'trash'
-    new_path = '/'.join(parts)
-    shutil.move(theme_path, new_path)
-
 def delete_current_theme():
+
+    def delete_theme(theme_path):
+        assert_valid_theme(theme_path)
+        parts = theme_path.split('/')
+        parts[-2] = 'trash'
+        new_path = '/'.join(parts)
+        shutil.move(theme_path, new_path)
+
     t = get_current_theme_path()
     delete_theme(t)
     notify('theme deleted: {}'.format(theme_name(t)))
@@ -118,7 +121,6 @@ def get_theme(arg):
     else:
         return
     exit(0)
-
 
 def print_help():
     print('\n'.join([

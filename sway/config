@@ -58,6 +58,7 @@ bindsym {
     $mod+ctrl+0 exec "theme set best-dark"
     $mod+ctrl+shift+0 exec "theme set best-light"
     $mod+shift+hyphen exec "notify-send hi"
+    $mod+equal exec "theme appreciate"
     $mod+ctrl+equal exec "theme delete"
 
     $mod+9 exec "theme-wall rand"
@@ -232,6 +233,6 @@ bindsym {
     $mod+shift+$right move right
 }
 
-exec_always "theme-wall grey"
+exec_always "theme-wall bg"
 
 include /etc/sway/config.d/*
