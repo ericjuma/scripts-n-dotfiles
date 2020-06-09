@@ -200,7 +200,7 @@ for_window [class="gvim"] floating enable
 
 gaps {
     outer 0
-    inner 16
+    inner 20
     top 0
 }
 

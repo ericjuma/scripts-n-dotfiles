@@ -195,3 +195,6 @@ alias python='python3'
 alias gs="git status"
 export KEYTIMEOUT=1
 export CARGO_HOME=$HOME/.config/cargo
+alias lc="cd ~/heet/laufcalc"
+alias nv="nordvpn"
+alias sc="sudo systemctl"

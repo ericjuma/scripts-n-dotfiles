@@ -260,11 +260,11 @@ if os.path.isfile(colors_absolute):
 
     # Background color of the statusbar in private browsing mode.
     # Type: QssColor
-    c.colors.statusbar.private.bg = background
+    c.colors.statusbar.private.bg = "#000000"
 
     # Foreground color of the statusbar in private browsing mode.
     # Type: QssColor
-    c.colors.statusbar.private.fg = foreground
+    c.colors.statusbar.private.fg = "#000000"
 
     # Background color of the progress bar.
     # Type: QssColor
