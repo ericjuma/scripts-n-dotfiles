@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+from time import sleep
+from sys import argv
+from os import system
+
+def noticlear(t):
+    system('makoctl dismiss')
+    sleep(t)
+
+def notinext(t):
+    noticlear(1)
+    # notitext = f"Now it's time to {t}"
+    notitext = f"{t}"
+    system(f'notify-send "{notitext}"')
+
+def wait(t):
+    if t[:4].lower() == 'plan':
+        print('plan')
+        sleep(14)
+    else:
+        print('task')
+        sleep(120)
+
+for task in argv[1:] * 10: 
+    notinext(task)
+    wait(task)
+notinext('DONE ' * 1000)

@@ -90,7 +90,7 @@ bindsym {
 
     Print exec "scrt"
     $mod+Print exec "scrt-select"
-
+    $mod+shift+semicolon exec "pkill mpv"
     Insert exec "swaylock"
 }
 
@@ -206,10 +206,10 @@ gaps {
 
 mode "resize" {
     bindsym {
-        $left resize shrink width 120px
-        $down resize grow height 120px
-        $up resize shrink height 120px
-        $right resize grow width 120px
+        $left resize shrink width 50px
+        $down resize grow height 50px
+        $up resize shrink height 50px
+        $right resize grow width 50px
 
         Return mode "default"
         Escape mode "default"

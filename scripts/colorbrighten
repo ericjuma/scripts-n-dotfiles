@@ -15,7 +15,7 @@ def hex2rgb(s):
 
 print(
     rgb2hex(list(map(
-        lambda n: int(n * 1.15),
+        lambda n: int(min(n * 1.15, 255)),
         hex2rgb(stdin.readline()[:-1])
     )))
 )

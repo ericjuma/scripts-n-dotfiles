@@ -156,6 +156,7 @@ alias ra="ranger"
 
 path+=("$HOME/.local/bin")
 path+=("$HOME/scripts")
+path+=("$HOME/vimwig/devtools")
 export PATH
 
 # If not running interactively, don't do anything
@@ -197,4 +198,8 @@ export KEYTIMEOUT=1
 export CARGO_HOME=$HOME/.config/cargo
 alias lc="cd ~/heet/laufcalc"
 alias nv="nordvpn"
+alias nvs="nordvpn status"
 alias sc="sudo systemctl"
+alias ytdl="youtube-dl"
+alias cpf="cat $1 | wl-copy"
+alias wlc="wl-copy"
