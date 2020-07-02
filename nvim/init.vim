@@ -51,6 +51,9 @@ nnoremap <C-_> :Goyo <CR>i<ESC>
 nnoremap <c-s> :w<CR>
 nnoremap <leader>ev :edit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>sw2 :set shiftwidth=2<CR>
+nnoremap <leader>sw3 :set shiftwidth=3<CR>
+nnoremap <leader>sw4 :set shiftwidth=4<CR>
 if has ('autocmd') " Remain compatible with earlier versions
  augroup vimrc     " Source vim configuration upon save
     autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
@@ -64,11 +67,10 @@ set foldmethod=indent
 set foldlevel=2
 set smartcase
 
-inoremap jk <ESC>
-inoremap kj <ESC>
 tnoremap <esc>m <C-\><C-n><c-o>
 nnoremap <esc>m :term<cr>
 
 " let g:python_highlight_all = 1
 set clipboard=unnamedplus
 nnoremap <leader><Space> :nohlsearch<CR>
+nnoremap <leader>cp ggyG

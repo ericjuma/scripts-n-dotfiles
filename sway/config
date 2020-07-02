@@ -120,7 +120,7 @@ bindsym {
 # Note: swaymsg -t get_inputs, man 5 sway-input
 output {
     eDP-1 scale 2 pos 0 0
-    DP-1 scale 2 pos 0 -1080
+    DP-1 scale 1 pos 0 -1080
     DP-3 scale 2 pos 0 -1080
      # DP-3 scale 1 pos 0 2400
 }
@@ -139,7 +139,7 @@ input type:touchpad {
 }
 
 input type:keyboard {
-    xkb_options caps:swapescape,altwin:swap_lalt_lwin,ctrl:ralt_rctrl
+    # xkb_options caps:swapescape,altwin:swap_lalt_lwin,ctrl:ralt_rctrl
 }
 
 floating_modifier $mod normal

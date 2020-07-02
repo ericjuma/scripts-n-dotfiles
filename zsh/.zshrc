@@ -164,9 +164,7 @@ export PATH
 
 alias ls='ls --color=auto'
 export QT_SCALE_FACTOR=1
-export QT_QPA_PLATFORM=wayland
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-export XDG_SESSION_TYPE=wayland
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
@@ -203,3 +201,7 @@ alias sc="sudo systemctl"
 alias ytdl="youtube-dl"
 alias cpf="cat $1 | wl-copy"
 alias wlc="wl-copy"
+alias forever="while true; do; "
+
+alias cpy='xclip -selection clipboard'
+alias pst='xclip -selection clipboard -o'

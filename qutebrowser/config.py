@@ -930,7 +930,7 @@ c.fonts.default_family = ["monospace"]
 ## either a float value with a "pt" suffix, or an integer value with a
 ## "px" suffix.
 ## Type: String
-# c.fonts.default_size = '10pt'
+c.fonts.default_size = '10pt'
 
 ## Font used for the downloadbar.
 ## Type: Font
@@ -998,7 +998,7 @@ c.fonts.default_family = ["monospace"]
 
 ## Default font size (in pixels) for fixed-pitch text.
 ## Type: Int
-# c.fonts.web.size.default_fixed = 13
+c.fonts.web.size.default_fixed = 10
 
 ## Hard minimum font size (in pixels).
 ## Type: Int
@@ -1250,7 +1250,7 @@ c.messages.timeout = 2000
 ## with some bitmap fonts. As an alternative to this, it's possible to
 ## set font sizes and the `zoom.default` setting.
 ## Type: Bool
-# c.qt.highdpi = True
+c.qt.highdpi = True
 
 ## When to use Chromium's low-end device mode. This improves the RAM
 ## usage of renderer processes, at the expense of performance.
@@ -1655,7 +1655,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 
 ## Default zoom level.
 ## Type: Perc
-c.zoom.default = '100%'
+c.zoom.default = '80%'
 
 ## Available zoom levels.
 ## Type: List of Perc
