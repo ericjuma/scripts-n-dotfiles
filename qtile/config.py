@@ -12,15 +12,15 @@ keys = [
     Key([mod], "k", lazy.layout.up()),
 
     # Move windows up or down in current stack
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([mod], "l", lazy.layout.shuffle_down()),
+    Key([mod], "h", lazy.layout.shuffle_up()),
 
 
     Key([mod, "control"], "j", lazy.layout.grow()),
     Key([mod, "control"], "k", lazy.layout.shrink()),
 
     # Switch window focus to other pane(s) of stack
-    Key([mod], "space", lazy.layout.next()),
+    Key([mod], "n", lazy.layout.next()),
 
     # Swap panes of split stack
     Key([mod, "shift"], "space", lazy.layout.rotate()),
@@ -32,6 +32,8 @@ keys = [
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
     Key([mod], "Return", lazy.spawn("kitty")),
     Key([mod], "q", lazy.spawn("qutebrowser")),
+    Key([mod], "c", lazy.spawn("startup")),
+    Key([mod, "control"], "f", lazy.spawn("firefox")),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -57,19 +59,10 @@ for i in groups:
     ])
 
 layouts = [
-    layout.MonadTall( ratio=.55, border_focus="#0000ff"),
+    layout.MonadTall( margin=50, ratio=.56, border_focus="#0000ff", border_normal="#000033"),
     layout.Max(),
-    # layout.Stack( num_stacks=2 ),
-    # Try more layouts by unleashing below layouts.
-    # layout.Bsp(),
-    # layout.Columns(),
-    # layout.Matrix(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Stack( num_stacks=2 ),
+    # layout.Columns(), layout.Matrix(), layout.MonadWide(), layout.RatioTile(), layout.Tile(), layout.VerticalTile(),
 ]
 
 widget_defaults = dict(
@@ -84,15 +77,13 @@ screens = [
         bottom=bar.Bar(
             [
                 widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(this_current_screen_border='0000ff', other_screen_border='000000', borderwidth=2),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.TextBox("default config", name="default"),
                 widget.Systray(),
-                widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
-                widget.QuickExit(),
+                widget.Clock(format='%a the %d  |  %I:%M'),
             ],
-            33,
+            50,
         ),
     ),
 ]

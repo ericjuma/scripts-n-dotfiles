@@ -1,8 +1,11 @@
 #!/bin/bash
 
 
-setxkbmap -option caps:swapescape
-setxkbmap -option altwin:swap_lalt_lwin
-setxkbmap -option ctrl:ralt_rctrl
+# setxkbmap -option caps:swapescape
+# setxkbmap -option altwin:swap_lalt_lwin
+# setxkbmap -option ctrl:ralt_rctrl
 xrandr --output eDP-1 --mode 3840x2160
+sleep .3
 xrandr --output DP-1 --same-as eDP-1
+sleep .3
+xrandr --auto;

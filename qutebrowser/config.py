@@ -998,7 +998,7 @@ c.fonts.default_size = '10pt'
 
 ## Default font size (in pixels) for fixed-pitch text.
 ## Type: Int
-c.fonts.web.size.default_fixed = 10
+c.fonts.web.size.default_fixed = 13
 
 ## Hard minimum font size (in pixels).
 ## Type: Int
@@ -1631,6 +1631,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'go': 'https://www.google.com/search?q={}',
                        'al': 'https://wiki.archlinux.org/?search={}',
                        'yt': 'https://youtube.com/results?search_query={}',
+                       'qt': 'http://docs.qtile.org/en/latest/search.html?q={}',
                        'r': 'https://reddit.com/r/{}',
                        'gh': 'https://github.com/search?q={}',
                        'wp': 'https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1'}
@@ -1655,7 +1656,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 
 ## Default zoom level.
 ## Type: Perc
-c.zoom.default = '80%'
+c.zoom.default = '90%'
 
 ## Available zoom levels.
 ## Type: List of Perc
