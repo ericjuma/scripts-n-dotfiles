@@ -1,3 +1,4 @@
 #!/bin/bash
-#grim -o "eDP-1" -g "$(slurp)" - | tee ~/pics/scrots/"$(date)" | wl-copy
+
 grim - | tee ~/pics/scrots/"$(date -Iminutes).png" | wl-copy
+maim -u | tee ~/pics/scrots/"$(date -Iminutes).png" | xclip -selection clipboard -t image/png -i

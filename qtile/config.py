@@ -5,6 +5,8 @@ from libqtile import layout, bar, widget
 from typing import List  # noqa: F401
 
 mod = "mod4"
+ctrl = "control"
+shft = "shift"
 
 keys = [
     # Switch between windows in current stack pane
@@ -16,31 +18,44 @@ keys = [
     Key([mod], "h", lazy.layout.shuffle_up()),
 
 
-    Key([mod, "control"], "j", lazy.layout.grow()),
-    Key([mod, "control"], "k", lazy.layout.shrink()),
+    Key([mod, ctrl], "j", lazy.layout.grow()),
+    Key([mod, ctrl], "k", lazy.layout.shrink()),
 
     # Switch window focus to other pane(s) of stack
     Key([mod], "n", lazy.layout.next()),
 
     # Swap panes of split stack
-    Key([mod, "shift"], "space", lazy.layout.rotate()),
+    Key([mod, shft], "space", lazy.layout.rotate()),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn("kitty")),
-    Key([mod], "q", lazy.spawn("qutebrowser")),
-    Key([mod], "c", lazy.spawn("startup")),
-    Key([mod, "control"], "f", lazy.spawn("firefox")),
+    Key([mod, shft], "Return", lazy.layout.toggle_split()),
+    Key([mod], "Return",
+        lazy.spawn("kitty")),
+
+    Key([mod], "q",
+        lazy.spawn("qutebrowser")),
+
+    Key([mod], "c",
+        lazy.spawn("startup")),
+
+    Key([mod, ctrl, shft], "s",
+        lazy.spawn("scrt")),
+
+    Key([mod, ctrl], "s",
+        lazy.spawn("scrt-select")),
+
+    Key([mod, ctrl], "f",
+        lazy.spawn("firefox")),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
     Key([mod], "w", lazy.window.kill()),
 
-    Key([mod, "control"], "r", lazy.restart()),
-    Key([mod, "control"], "q", lazy.shutdown()),
+    Key([mod, ctrl], "r", lazy.restart()),
+    Key([mod, ctrl], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
 ]
 
