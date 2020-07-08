@@ -23,4 +23,5 @@ zsh/oh-my-zsh/*
 !/zsh/oh-my-zsh/custom
 /zsh/oh-my-zsh/custom/plugins
 !/qtile
+!/gergoplex
 __pycache__

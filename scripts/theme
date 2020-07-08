@@ -9,7 +9,6 @@ import random
 from pathlib import Path
 import pdb
 
-
 def assert_valid_theme(t):
     assert type(t) == str
     assert Path(t).exists()

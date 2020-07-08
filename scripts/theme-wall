@@ -23,4 +23,4 @@ fi
 
 echo $color
 
-swaymsg "output * bg $(echo $color | colordarken) solid_color"
+convert -size 100x100 xc:$color jpeg:- | feh --bg-scale - 

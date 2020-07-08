@@ -9,57 +9,38 @@ ctrl = "control"
 shft = "shift"
 
 keys = [
-    # Switch between windows in current stack pane
+
+    # hjkl
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
-
-    # Move windows up or down in current stack
     Key([mod], "l", lazy.layout.shuffle_down()),
     Key([mod], "h", lazy.layout.shuffle_up()),
-
 
     Key([mod, ctrl], "j", lazy.layout.grow()),
     Key([mod, ctrl], "k", lazy.layout.shrink()),
 
-    # Switch window focus to other pane(s) of stack
-    Key([mod], "n", lazy.layout.next()),
-
-    # Swap panes of split stack
-    Key([mod, shft], "space", lazy.layout.rotate()),
-
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key([mod, shft], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return",
-        lazy.spawn("kitty")),
-
-    Key([mod], "q",
-        lazy.spawn("qutebrowser")),
-
-    Key([mod], "c",
-        lazy.spawn("startup")),
-
-    Key([mod, ctrl, shft], "s",
-        lazy.spawn("scrt")),
-
-    Key([mod, ctrl], "s",
-        lazy.spawn("scrt-select")),
-
-    Key([mod, ctrl], "f",
-        lazy.spawn("firefox")),
-
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout()),
-    Key([mod], "w", lazy.window.kill()),
-
-    Key([mod, ctrl], "r", lazy.restart()),
+    # qwert
     Key([mod, ctrl], "q", lazy.shutdown()),
+    Key([mod], "w", lazy.layout.next()),
+    Key([mod], "e", lazy.next_layout()),
     Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "t", lazy.layout.toggle_split()),
+
+    Key([mod, ctrl], "e", lazy.window.kill()),
+    Key([mod, ctrl], "r", lazy.restart()),
+    Key([mod, shft], "r", lazy.layout.rotate()),
+
+    # program launchers
+    Key([mod], "Return", lazy.spawn("kitty")),
+    Key([mod], "n", lazy.spawn("firefox")),
+    Key([mod], "m", lazy.spawn("qutebrowser")),
+    Key([mod], "comma", lazy.spawn("startup")),
+    Key([mod], "period", lazy.spawn("scrt-select")),
+    Key([mod, ctrl], "period", lazy.spawn("scrt")),
+
 ]
 
-groups = [Group(i) for i in "asdfuiop"]
+groups = [Group(i) for i in "asdfzxcv"]
 
 for i in groups:
     keys.extend([
@@ -76,7 +57,7 @@ for i in groups:
 layouts = [
     layout.MonadTall( margin=50, ratio=.56, border_focus="#0000ff", border_normal="#000033"),
     layout.Max(),
-    layout.Stack( num_stacks=2 ),
+    layout.Stack( margin=30, num_stacks=2 ),
     # layout.Columns(), layout.Matrix(), layout.MonadWide(), layout.RatioTile(), layout.Tile(), layout.VerticalTile(),
 ]
 
