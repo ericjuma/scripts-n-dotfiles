@@ -1,19 +1,35 @@
-// Gergoplex specfic combos 
-COMB(ws,      KC_ESC,          KC_W, KC_S)
-COMB(ed,      KC_ESC,          KC_E, KC_D)
-COMB(rf,      KC_ESC,          KC_R, KC_F)
+COMB(df,      KC_ESC,          KC_D, KC_F)
+COMB(jk,      KC_QUOT,          KC_J, KC_K)
 
-COMB(uj,      KC_ESC,          KC_U, KC_J)
-COMB(ik,      KC_ESC,          KC_I, KC_K)
-COMB(ol,      KC_ESC,          KC_O, KC_L)
+COMB(kl,      KC_QUOT,          KC_K, KC_L)
 
-COMB(df,      KC_BSPC,          KC_D, KC_F)
-COMB(jk,      KC_ESC,          KC_J, KC_K)
+COMB(dj,      KC_PLUS,          KC_D, KC_J)
+COMB(dk,      KC_MINUS,          KC_D, KC_K)
+
+COMB(fj,      KC_UNDS,          KC_F, KC_J)
+COMB(fk,      KC_EQL,          KC_F, KC_K)
+
+COMB(sf,      KC_PERC,          KC_S, KC_F)
+COMB(jl,      KC_TILD,          KC_J, KC_L)
+
+COMB(ed,      KC_DLR,          KC_E, KC_D)
+COMB(ws,      KC_ASTR,          KC_W, KC_S)
+COMB(rf,      KC_HASH,          KC_R, KC_F)
+
+COMB(cv,      KC_PIPE,          KC_C, KC_V)
+COMB(mco,      KC_EXLM,          KC_M, KC_COMMA)
+
+COMB(xc,      KC_AMPR,          KC_X, KC_C)
+COMB(cope,      KC_AT,          KC_DOT, KC_COMMA)
+
+COMB(yh,      KC_LEFT,          KC_Y, KC_H)
+COMB(uj,      KC_DOWN,          KC_U, KC_J)
+COMB(ik,      KC_UP,            KC_I, KC_K)
+COMB(ol,      KC_ESC,           KC_O, KC_L)
+
 
 COMB(fv,      KC_ESC,          KC_F, KC_V)
 COMB(jm,      KC_ESC,          KC_J, KC_M)
 
-COMB(fg,      KC_ESC,          KC_F, KC_G)
-COMB(hj,      KC_ESC,          KC_H, KC_J)
-
-COMB(kl,      KC_BSPC,          KC_K, KC_L)
+COMB(fg,      KC_GRV,          KC_F, KC_G)
+COMB(hj,      KC_CIRC,          KC_H, KC_J)
