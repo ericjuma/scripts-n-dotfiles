@@ -24,11 +24,11 @@ def cachepath(new_file_relative_path=''):
     assert type(new_file_relative_path) == str
     return os.path.expanduser('~/.cache/wal/' + new_file_relative_path)
 
-def pick_random_theme(theme_type):
+def themepath(theme=''):
+    assert type(theme) == str
+    return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
 
-    def themepath(theme=''):
-        assert type(theme) == str
-        return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
+def pick_random_theme(theme_type):
 
     assert type(theme_type) == str
 
@@ -58,8 +58,9 @@ def apply_theme(colors):
     assert type(colors) == dict
     wal.sequences.send(colors)
     wal.export.every(colors)
-    # set_wallpaper('bg')
+    set_wallpaper('bg')
     wal.reload.env()
+    os.system("qtile-cmd -o cmd -f restart")
 
 def set_theme(theme_type):
     assert type(theme_type) == str

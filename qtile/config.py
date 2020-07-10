@@ -60,14 +60,14 @@ with open('/home/mimi/.cache/wal/colors.json') as f:
 
 backgr = colorscheme['special']['background']
 foregr = colorscheme['special']['foreground']
-color1 = colorscheme['colors']['color5']
+#color1 = colorscheme['colors']['color5']
+color1 = colorscheme['colors']['color1']
 color2 = colorscheme['colors']['color6']
 color3 = colorscheme['colors']['color2']
 
 layouts = [
-    layout.MonadTall( margin=50, ratio=.56, border_focus=color1, border_normal=backgr),
+    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=foregr, border_normal=backgr ),
     layout.Max(),
-    layout.Stack( margin=30, num_stacks=2 ),
     # layout.Columns(), layout.Matrix(), layout.MonadWide(), layout.RatioTile(), layout.Tile(), layout.VerticalTile(),
 ]
 
@@ -82,15 +82,16 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(this_current_screen_border=color1, other_screen_border=backgr, borderwidth=2),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Systray(),
-                widget.Clock(format='%a the %d  |  %I:%M'),
+                widget.CurrentLayout(foreground=foregr),
+                widget.GroupBox(active=foregr, disable_drag=True, this_current_screen_border=color1, other_screen_border=backgr, borderwidth=2),
+                widget.Prompt(foreground=foregr),
+                widget.WindowName(foreground=backgr),
+                widget.Systray(foreground=foregr),
+                widget.Clock(foreground=foregr, format='%a the %d  |  %I:%M'),
             ],
             50,
-            background=backgr
+            background=backgr,
+            foreground=foregr
         ),
     ),
 ]
