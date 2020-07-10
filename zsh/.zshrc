@@ -206,3 +206,5 @@ alias forever="while true; do; "
 
 alias cpy='xclip -selection clipboard'
 alias pst='xclip -selection clipboard -o'
+
+alias py='python3'

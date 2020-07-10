@@ -1,6 +1,7 @@
 from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.lazy import lazy
 from libqtile import layout, bar, widget
+import json
 
 from typing import List  # noqa: F401
 
@@ -19,14 +20,14 @@ keys = [
     Key([mod, ctrl], "j", lazy.layout.grow()),
     Key([mod, ctrl], "k", lazy.layout.shrink()),
 
-    # qwert
+    # control
     Key([mod, ctrl], "q", lazy.shutdown()),
     Key([mod], "w", lazy.layout.next()),
     Key([mod], "e", lazy.next_layout()),
     Key([mod], "r", lazy.spawncmd()),
     Key([mod], "t", lazy.layout.toggle_split()),
 
-    Key([mod, ctrl], "e", lazy.window.kill()),
+    Key([mod, ctrl], "l", lazy.window.kill()),
     Key([mod, ctrl], "r", lazy.restart()),
     Key([mod, shft], "r", lazy.layout.rotate()),
 
@@ -54,8 +55,17 @@ for i in groups:
         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
 
+with open('/home/mimi/.cache/wal/colors.json') as f:
+    colorscheme = json.load(f)
+
+backgr = colorscheme['special']['background']
+foregr = colorscheme['special']['foreground']
+color1 = colorscheme['colors']['color5']
+color2 = colorscheme['colors']['color6']
+color3 = colorscheme['colors']['color2']
+
 layouts = [
-    layout.MonadTall( margin=50, ratio=.56, border_focus="#0000ff", border_normal="#000033"),
+    layout.MonadTall( margin=50, ratio=.56, border_focus=color1, border_normal=backgr),
     layout.Max(),
     layout.Stack( margin=30, num_stacks=2 ),
     # layout.Columns(), layout.Matrix(), layout.MonadWide(), layout.RatioTile(), layout.Tile(), layout.VerticalTile(),
@@ -73,13 +83,14 @@ screens = [
         bottom=bar.Bar(
             [
                 widget.CurrentLayout(),
-                widget.GroupBox(this_current_screen_border='0000ff', other_screen_border='000000', borderwidth=2),
+                widget.GroupBox(this_current_screen_border=color1, other_screen_border=backgr, borderwidth=2),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Systray(),
                 widget.Clock(format='%a the %d  |  %I:%M'),
             ],
             50,
+            background=backgr
         ),
     ),
 ]

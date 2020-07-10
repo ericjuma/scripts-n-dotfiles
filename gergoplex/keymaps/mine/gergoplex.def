@@ -1,7 +1,7 @@
-COMB(df,      KC_ESC,          KC_D, KC_F)
+COMB(df,      KC_BSPC,          KC_D, KC_F)
 COMB(jk,      KC_QUOT,          KC_J, KC_K)
 
-COMB(kl,      KC_QUOT,          KC_K, KC_L)
+COMB(kl,      KC_DQUO,          KC_K, KC_L)
 
 COMB(dj,      KC_PLUS,          KC_D, KC_J)
 COMB(dk,      KC_MINUS,          KC_D, KC_K)
@@ -25,7 +25,7 @@ COMB(cope,      KC_AT,          KC_DOT, KC_COMMA)
 COMB(yh,      KC_LEFT,          KC_Y, KC_H)
 COMB(uj,      KC_DOWN,          KC_U, KC_J)
 COMB(ik,      KC_UP,            KC_I, KC_K)
-COMB(ol,      KC_ESC,           KC_O, KC_L)
+COMB(ol,      KC_RIGHT,           KC_O, KC_L)
 
 
 COMB(fv,      KC_ESC,          KC_F, KC_V)
