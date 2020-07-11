@@ -174,7 +174,7 @@ alias pacman='pacman --color=auto'
 export BROWSER='qutebrowser'
 alias sps='sudo pacman -S'
 alias spu='sudo pacman -Syu'
-alias hi='$(cat ~/.histfile | fzf)'
+alias hi='$(cat ~/.histfile | fzf | cpy)'
 function yta() {
     mpv --ytdl-format=bestaudio ytdl://ytsearch:"$*"
 }

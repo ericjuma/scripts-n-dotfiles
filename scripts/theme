@@ -1,134 +1,107 @@
 #!/bin/python
 
 import pywal as wal
-import pathlib
 from sys import argv
 import shutil
 import os
 import random
 from pathlib import Path
-import pdb
 
-def assert_valid_theme(t):
-    assert type(t) == str
-    assert Path(t).exists()
 
-def theme_name(theme):
-    assert type(theme) == str
-    return theme.split('/')[-1][:-5]
+def path(relative_path_string):
+    return Path.expanduser(Path(relative_path_string))
+
+walcache = path('~/.cache/wal/')
+themepath = path('~/.config/wal/colorschemes')
 
 def notify(text):
     os.system(f"notify-send -t 10000 '{text}'")
 
-def cachepath(new_file_relative_path=''):
-    assert type(new_file_relative_path) == str
-    return os.path.expanduser('~/.cache/wal/' + new_file_relative_path)
+def record_theme_path(theme):
+    with open(walcache / 'colors.path', 'w') as f:
+        f.write(str(theme))
 
-def themepath(theme=''):
-    assert type(theme) == str
-    return os.path.expanduser('~/.config/wal/colorschemes/' + theme)
+def current_theme():
+    return path((walcache / 'colors.path').read_text())
 
-def pick_random_theme(theme_type):
-
-    assert type(theme_type) == str
-
-    possible_themes = Path(themepath()).rglob(f'{theme_type}/*.json')
-    chosen_theme = str(random.choice(list(possible_themes)))
-
-    assert_valid_theme(chosen_theme)
-    return chosen_theme
-    
-def record_theme_path(theme_path):
-    assert_valid_theme(theme_path)
-    with open(cachepath('colors.path'), 'w') as f:
-        f.write(theme_path)
-
-def get_current_theme_path():
-    with open(cachepath('colors.path')) as f:
-        path = f.readline()
-    assert_valid_theme(path)
-    return path
-
-def set_wallpaper(color):
-    assert(color in ['rand', 'bg', 'grey'])
-    os.system(f'theme-wall {color}')
+def restart_qtile():
+    os.system("qtile-cmd -o cmd -f restart > /dev/null 2>&1")
 
 def apply_theme(colors):
-
     assert type(colors) == dict
     wal.sequences.send(colors)
     wal.export.every(colors)
-    set_wallpaper('bg')
+    os.system(f'theme-wall bg')
     wal.reload.env()
-    os.system("qtile-cmd -o cmd -f restart")
+    restart_qtile()
 
-def set_theme(theme_type):
-    assert type(theme_type) == str
+def delete_theme(theme):
+    new_path = theme.parent.parent / 'trash' / theme.name
+    shutil.copyfile(theme, new_path)
 
-    theme_path = pick_random_theme(theme_type)
-    print(f'Theme path: {theme_path}')
+def appreciate_theme(theme):
+    new_path = theme.parent.parent / ('best-' + theme.parent.name) / theme.name
+    shutil.copyfile(theme, new_path)
 
-    assert_valid_theme(theme_path)
-    record_theme_path(theme_path)
+################################################################################
 
-    theme_colors = wal.colors.file(theme_path)
+def color_theme(theme_type):
+    possible_themes = themepath.rglob(f'{theme_type}/*.json')
+    theme = random.choice(list(possible_themes))
+    
+    print(f'Theme: {theme}')
+    record_theme_path(theme)
+
+    theme_colors = wal.colors.file(str(theme))
     apply_theme(theme_colors)
-    notify('theme set: {}'.format(theme_name(theme_path)))
-
-    exit(0)
+    notify('theme set: {}'.format(theme.stem))
 
 def delete_current_theme():
-
-    def delete_theme(theme_path):
-        assert_valid_theme(theme_path)
-        parts = theme_path.split('/')
-        parts[-2] = 'trash'
-        new_path = '/'.join(parts)
-        shutil.move(theme_path, new_path)
-
-    t = get_current_theme_path()
+    t = current_theme()
     delete_theme(t)
-    notify('theme deleted: {}'.format(theme_name(t)))
-    exit(0)
-
-def appreciate_theme(theme_path):
-    assert_valid_theme(theme_path)
-    parts = theme_path.split('/')
-    parts[-2] = 'best-' + parts[-2]
-    new_path = '/'.join(parts)
-    shutil.copyfile(theme_path, new_path)
+    notify('theme deleted: {}'.format(t.stem))
 
 def appreciate_current_theme():
-    t = get_current_theme_path()
+    t = current_theme()
     appreciate_theme(t)
-    notify('theme appreciated: {}'.format(theme_name(t)))
-    exit(0)
+    notify('theme appreciated: {}'.format(t.stem))
 
-def get_theme(arg):
-    path = get_current_theme_path()
+def get_info(arg):
     if arg == 'mode':
-        category = path.split('/')[-2]
-        unappreciated = category.split('best-')[-1]
-        print(unappreciated)
+        print(current_theme().parent.name.split("best-")[-1])
     elif arg == 'name':
-        print(theme_name(path))
+        print(current_theme().stem)
     elif arg == 'path':
-        print(path)
+        print(str(current_theme()))
     elif arg == 'colors':
-        print(wal.colors.file(path))
+        print((walcache / "colors.yml").read_text())
     elif arg == 'dirs':
         os.system('ls --color=auto ~/.config/wal/colorschemes')
+
+def wall_theme(wall_name, brightness="dark"):
+    walls = path("~/pics/walls")
+
+    if wall_name == "random":
+        wall = walls
     else:
-        return
-    exit(0)
+        wall = next(walls.glob(f"{wall_name}*"))
+
+    record_theme_path(wall)
+    brightness = "-l" if brightness in ["light", "l", "bright"] else ""
+    os.system(f"wal -i {wall} {brightness}")
+    restart_qtile()
 
 def print_help():
     print('\n'.join([
         "Commands:",
         "",
-        "set <dir>",
+        "color <dir>",
         "    this chooses a random colorscheme",
         "    from the <dir> directory",
+        "",
+        "wall <name>",
+        "    sets colorscheme based on wallpaper in",
+        "    ~/pics/walls, file extension not needed",
         "",
         "delete",
         "   this moves the current theme to the trash",
@@ -143,22 +116,19 @@ def print_help():
         "   mode, name, path, colors, dirs",
     ]))
 
-def main():
+################################################################################
+
+if __name__ == "__main__":
     main_command = argv[1]
     arg_map = {
-        "set": set_theme,
+        "set": color_theme,
+        "wall": wall_theme,
         "delete": delete_current_theme,
         "appreciate": appreciate_current_theme,
         "help": print_help,
-        "get": get_theme
+        "get": get_info
     }
     if len(argv) > 2:
-        arg_map[main_command](argv[2])
+        arg_map[main_command](*argv[2:])
     else:
         arg_map[main_command]()
-    print_help()
-    exit(1)
-
-
-if __name__ == "__main__":
-    main()
