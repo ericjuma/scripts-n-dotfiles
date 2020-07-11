@@ -78,8 +78,8 @@ def get_info(arg):
     elif arg == 'dirs':
         os.system('ls --color=auto ~/.config/wal/colorschemes')
 
-def wall_theme(wall_name, brightness="dark"):
-    walls = path("~/pics/walls")
+def wall_theme(wall_name, brightness, walls_path="~/pics/walls"):
+    walls = path(walls_path)
 
     if wall_name == "random":
         wall = walls
