@@ -32,7 +32,6 @@ def rgb2hex(t):
         lambda n: hex(n)[2:].rjust(2, '0')[-2:], t
     )))
 
-
 def hex2rgb(s):
     return tuple(map(
         lambda n: int(n, 16),
@@ -75,7 +74,6 @@ def wallcolor(colortype):
         set_wallpaper(colors["colors"]["color8"])
     else:
         colors = list(colors["special"].values()) + list(colors["colors"].values())
-        print(colors)
         set_wallpaper(random.choice(colors))
 
 def color_theme(theme_type):
