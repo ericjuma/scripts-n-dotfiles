@@ -1,0 +1,4 @@
+#!/usr/bin/zsh
+
+cd ~/music/songs
+zsh

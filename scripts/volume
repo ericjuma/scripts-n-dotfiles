@@ -6,5 +6,4 @@ then
 else
     pactl set-sink-volume @DEFAULT_SINK@ $1
 fi
-makoctl dismiss
 notify-send -t 2000 "$(pamixer --get-volume)"

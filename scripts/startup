@@ -9,8 +9,8 @@ sleep .3
 xrandr --output DP-1 --same-as eDP-1
 sleep .3
 xrandr --auto;
-nitrogen --restore
+wal -R
 
 pkill picom
 sleep .3
-picom --experimental-backends
+picom

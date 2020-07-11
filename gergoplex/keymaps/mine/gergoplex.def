@@ -3,11 +3,11 @@ COMB(jk,      KC_QUOT,          KC_J, KC_K)
 
 COMB(kl,      KC_DQUO,          KC_K, KC_L)
 
-COMB(dj,      KC_PLUS,          KC_D, KC_J)
-COMB(dk,      KC_MINUS,          KC_D, KC_K)
+COMB(ui,      KC_PLUS,          KC_U, KC_I)
+COMB(sd,      KC_MINUS,          KC_D, KC_S)
 
-COMB(fj,      KC_UNDS,          KC_F, KC_J)
-COMB(fk,      KC_EQL,          KC_F, KC_K)
+COMB(we,      KC_UNDS,          KC_W, KC_E)
+COMB(io,      KC_EQL,          KC_I, KC_O)
 
 COMB(sf,      KC_PERC,          KC_S, KC_F)
 COMB(jl,      KC_TILD,          KC_J, KC_L)
@@ -27,9 +27,6 @@ COMB(uj,      KC_DOWN,          KC_U, KC_J)
 COMB(ik,      KC_UP,            KC_I, KC_K)
 COMB(ol,      KC_RIGHT,           KC_O, KC_L)
 
-
-COMB(fv,      KC_ESC,          KC_F, KC_V)
-COMB(jm,      KC_ESC,          KC_J, KC_M)
 
 COMB(fg,      KC_GRV,          KC_F, KC_G)
 COMB(hj,      KC_CIRC,          KC_H, KC_J)
