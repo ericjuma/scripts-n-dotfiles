@@ -27,11 +27,33 @@ def current_theme():
 def restart_qtile():
     os.system("qtile-cmd -o cmd -f restart > /dev/null 2>&1")
 
+def rgb2hex(t):
+    return '#' + ''.join(tuple(map(
+        lambda n: hex(n)[2:].rjust(2, '0')[-2:], t
+    )))
+
+
+def hex2rgb(s):
+    return tuple(map(
+        lambda n: int(n, 16),
+        [s[1:3], s[3:5], s[5:7]]
+    ))
+
+def tint(color, factor):
+    return rgb2hex(
+        [int(min(n * factor, 255)) for n in hex2rgb(color)]
+    )
+
+def set_wallpaper(color):
+    factor = 0.90 if get_info("mode") == "dark" else 1.15
+    tinted = tint(color, factor)
+    os.system(f"convert -size 100x100 xc:{tinted} jpeg:- | feh --bg-scale -")
+
 def apply_theme(colors):
     assert type(colors) == dict
     wal.sequences.send(colors)
     wal.export.every(colors)
-    os.system(f'theme-wall bg')
+    wallcolor("bg")
     wal.reload.env()
     restart_qtile()
 
@@ -44,6 +66,17 @@ def appreciate_theme(theme):
     shutil.copyfile(theme, new_path)
 
 ################################################################################
+
+def wallcolor(colortype):
+    colors = wal.colors.file(str(current_theme()))
+    if (colortype == "bg"):
+        set_wallpaper(colors["special"]["background"])
+    elif (colortype == "gray"):
+        set_wallpaper(colors["colors"]["color8"])
+    else:
+        colors = list(colors["special"].values()) + list(colors["colors"].values())
+        print(colors)
+        set_wallpaper(random.choice(colors))
 
 def color_theme(theme_type):
     possible_themes = themepath.rglob(f'{theme_type}/*.json')
@@ -82,7 +115,7 @@ def wall_theme(wall_name, brightness, walls_path="~/pics/walls"):
     walls = path(walls_path)
 
     if wall_name == "random":
-        wall = walls
+        wall = random.choice(list(walls.iterdir()))
     else:
         wall = next(walls.glob(f"{wall_name}*"))
 
@@ -98,6 +131,9 @@ def print_help():
         "color <dir>",
         "    this chooses a random colorscheme",
         "    from the <dir> directory",
+        "",
+        "wallcolor <name>",
+        "    set wallpaper color to bg, gray, or random",
         "",
         "wall <name>",
         "    sets colorscheme based on wallpaper in",
@@ -123,6 +159,7 @@ if __name__ == "__main__":
     arg_map = {
         "set": color_theme,
         "wall": wall_theme,
+        "wallcolor": wallcolor,
         "delete": delete_current_theme,
         "appreciate": appreciate_current_theme,
         "help": print_help,

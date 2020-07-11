@@ -1,4 +1,5 @@
-#!/bin/python
+#!/usr/bin/python
+
 from sys import stdin
 
 def rgb2hex(t):
