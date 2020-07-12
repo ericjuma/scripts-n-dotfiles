@@ -82,15 +82,19 @@ groups.append(
                      on_focus_lost_hide=True),
             DropDown("torrent", "transmission-gtk",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.5,
+                     opacity=0.8,
                      on_focus_lost_hide=True),
             DropDown("audio", "pavucontrol",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.5,
+                     opacity=0.8,
                      on_focus_lost_hide=True),
-            DropDown("music", "kitty zsh -c 'cd ~/music/songs; listen songs; zsh'",
+            DropDown("music", "kitty zsh -c 'cd ~/music/songs; zsh'",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.5,
+                     opacity=0.8,
+                     on_focus_lost_hide=True),
+            DropDown("files", "kitty ranger",
+                     x=0.2, y=0.05, width=0.65, height=0.9,
+                     opacity=1,
                      on_focus_lost_hide=True),
         ])
 )
@@ -102,6 +106,7 @@ keys.append(Key([mod], '4', lazy.group['scratchpad'].dropdown_toggle('term')))
 keys.append(Key([mod], '5', lazy.group['scratchpad'].dropdown_toggle('torrent')))
 keys.append(Key([mod], '6', lazy.group['scratchpad'].dropdown_toggle('audio')))
 keys.append(Key([mod], '7', lazy.group['scratchpad'].dropdown_toggle('music')))
+keys.append(Key([mod], '8', lazy.group['scratchpad'].dropdown_toggle('files')))
 
 with open('/home/mimi/.cache/wal/colors.json') as f:
     colorscheme = json.load(f)
@@ -113,7 +118,7 @@ color2 = colorscheme['colors']['color6']
 color3 = colorscheme['colors']['color2']
 
 layouts = [
-    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=foregr, border_normal=backgr ),
+    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=color1, border_normal=backgr ),
     layout.Max(),
 ]
 

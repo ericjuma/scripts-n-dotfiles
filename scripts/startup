@@ -13,4 +13,4 @@ wal -R
 
 pkill picom
 sleep .3
-picom
+picom -b
