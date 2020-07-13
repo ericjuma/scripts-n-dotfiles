@@ -661,7 +661,7 @@ c.completion.scrollbar.width = 0
 ## QtWebEngine, writing the clipboard as response to a user interaction
 ## is always allowed.
 ## Type: Bool
-# c.content.javascript.can_access_clipboard = False
+c.content.javascript.can_access_clipboard = True
 
 ## Allow JavaScript to close tabs.
 ## Type: Bool
@@ -743,7 +743,7 @@ c.completion.scrollbar.width = 0
 ## still be downloaded by clicking the download button in the pdf.js
 ## viewer.
 ## Type: Bool
-# c.content.pdfjs = False
+c.content.pdfjs = True
 
 ## Allow websites to request persistent storage quota via
 ## `navigator.webkitPersistentStorage.requestQuota`.
@@ -938,7 +938,7 @@ c.fonts.default_size = '10pt'
 
 ## Font used for the hints.
 ## Type: Font
-# c.fonts.hints = 'bold default_size default_family'
+c.fonts.hints = 'default_size default_family'
 
 ## Font used in the keyhint widget.
 ## Type: Font
@@ -1016,12 +1016,12 @@ c.fonts.web.size.default_fixed = 13
 ##   - unique-match: Auto-follow whenever there is a unique non-empty match in either the hint string (word mode) or filter (number mode).
 ##   - full-match: Follow the hint when the user typed the whole hint (letter, word or number mode) or the element's text (only in number mode).
 ##   - never: The user will always need to press Enter to follow a hint.
-# c.hints.auto_follow = 'unique-match'
+c.hints.auto_follow = 'unique-match'
 
 ## Duration (in milliseconds) to ignore normal-mode key bindings after a
 ## successful auto-follow.
 ## Type: Int
-# c.hints.auto_follow_timeout = 0
+c.hints.auto_follow_timeout = 80
 
 ## CSS border value for hints.
 ## Type: String
@@ -1029,7 +1029,7 @@ c.fonts.web.size.default_fixed = 13
 
 ## Characters used for hint strings.
 ## Type: UniqueCharString
-c.hints.chars = 'asdfghjkl;qweruiopzxcvnm,/'
+c.hints.chars = """asdghjklqweruiopzxcvm,/=_-@!|~%$*#`^12347890{([])}<.56ASDFHJKL:ZXCVNM?WERYUIOPf"""
 
 ## Dictionary file to be used by the word hints.
 ## Type: File
@@ -1631,6 +1631,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'go': 'https://www.google.com/search?q={}',
                        'al': 'https://wiki.archlinux.org/?search={}',
                        'yt': 'https://youtube.com/results?search_query={}',
+                       'py': 'https://docs.python.org/3/search.html?q={}&check_keywords=yes&area=default',
                        'qt': 'http://docs.qtile.org/en/latest/search.html?q={}',
                        'r': 'https://reddit.com/r/{}',
                        'gh': 'https://github.com/search?q={}',
@@ -1717,7 +1718,7 @@ config.bind(';R', 'hint --rapid images tab-bg')
 # config.bind('<Ctrl-A>', 'navigate increment')
 # config.bind('<Ctrl-Alt-p>', 'print')
 # config.bind('<Ctrl-B>', 'scroll-page 0 -1')
-# config.bind('<Ctrl-D>', 'scroll-page 0 0.5')
+config.bind('<Ctrl-J>', 'scroll-page 0 0.4')
 # config.bind('<Ctrl-F5>', 'reload -f')
 # config.bind('<Ctrl-F>', 'scroll-page 0 1')
 # config.bind('<Ctrl-N>', 'open -w')
@@ -1731,7 +1732,7 @@ config.bind(';R', 'hint --rapid images tab-bg')
 # config.bind('<Ctrl-Shift-W>', 'close')
 # config.bind('<Ctrl-T>', 'open -t')
 # config.bind('<Ctrl-Tab>', 'tab-focus last')
-# config.bind('<Ctrl-U>', 'scroll-page 0 -0.5')
+config.bind('<Ctrl-K>', 'scroll-page 0 -0.4')
 # config.bind('<Ctrl-V>', 'enter-mode passthrough')
 # config.bind('<Ctrl-W>', 'tab-close')
 # config.bind('<Ctrl-X>', 'navigate decrement')
@@ -1752,10 +1753,10 @@ config.bind(';R', 'hint --rapid images tab-bg')
 # config.bind('D', 'tab-close -o')
 # config.bind('F', 'hint all tab')
 # config.bind('G', 'scroll-to-perc')
-# config.bind('H', 'back')
+config.bind('<Left>', 'back')
 config.bind('<Down>', 'tab-next')
 config.bind('<Up>', 'tab-prev')
-# config.bind('L', 'forward')
+config.bind('<Right>', 'forward')
 # config.bind('M', 'bookmark-add')
 # config.bind('N', 'search-prev')
 # config.bind('O', 'set-cmd-text -s :open -t')
@@ -1974,6 +1975,6 @@ config.bind('<Up>', 'tab-prev')
 # config.bind('N', 'prompt-accept --save no', mode='yesno')
 # config.bind('Y', 'prompt-accept --save yes', mode='yesno')
 # config.bind('n', 'prompt-accept no', mode='yesno')
-# config.bind('y', 'prompt-accept yes', mode='yesno')
+config.bind('f', 'prompt-accept yes', mode='yesno')
 
 config.source('qutewal.py')

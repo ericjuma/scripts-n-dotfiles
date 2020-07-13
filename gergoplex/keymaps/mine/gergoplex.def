@@ -1,3 +1,5 @@
+COMB(er,      KC_BSLS,          KC_E, KC_R)
+
 COMB(df,      KC_BSPC,          KC_D, KC_F)
 COMB(jk,      KC_QUOT,          KC_J, KC_K)
 

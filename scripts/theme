@@ -86,6 +86,7 @@ def color_theme(theme_type):
     theme_colors = wal.colors.file(str(theme))
     apply_theme(theme_colors)
     notify('theme set: {}'.format(theme.stem))
+    os.system("wal --preview")
 
 def delete_current_theme():
     t = current_theme()
@@ -119,7 +120,8 @@ def wall_theme(wall_name, brightness, walls_path="~/pics/walls"):
 
     record_theme_path(wall)
     brightness = "-l" if brightness in ["light", "l", "bright"] else ""
-    os.system(f"wal -i {wall} {brightness}")
+    backend = random.choice(["wal", "haishoku", "colorthief", "colorz"])
+    os.system(f"wal -i {wall} {brightness} --backend {backend}")
     restart_qtile()
 
 def print_help():

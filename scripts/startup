@@ -10,7 +10,3 @@ xrandr --output DP-1 --same-as eDP-1
 sleep .3
 xrandr --auto;
 wal -R
-
-pkill picom
-sleep .3
-picom -b

@@ -7,6 +7,7 @@ import json
 from typing import List  # noqa: F401
 
 mod = "mod4"
+alt = "mod1"
 ctrl = "control"
 shft = "shift"
 
@@ -28,7 +29,7 @@ keys = [
     Key([mod], "r", lazy.spawncmd()),
     Key([mod], "t", lazy.layout.toggle_split()),
 
-    Key([mod, ctrl], "l", lazy.window.kill()),
+    Key([mod], "BackSpace", lazy.window.kill()),
     Key([mod, ctrl], "r", lazy.restart()),
     Key([mod, shft], "r", lazy.layout.rotate()),
 
@@ -44,6 +45,9 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("volume -10%")),
     Key([], "XF86AudioMute", lazy.spawn("volume mute")),
 
+    #Key([mod], "Down", lazy.spawn("theme set dark")),
+    #Key([mod], "Up", lazy.spawn("theme set light")),
+    Key([mod], "Right", lazy.spawn("theme wallcolor rand")),
 
 ]
 
@@ -64,11 +68,15 @@ groups.append(
            #          x=0.2, y=0.05, width=0.65, height=0.9,
            #          opacity=0.95,
            #          on_focus_lost_hide=True),
+            DropDown("py", "kitty python",
+                     x=0.2, y=0.05, width=0.5, height=0.5,
+                     opacity=0.95,
+                     on_focus_lost_hide=True),
             DropDown("term", "kitty",
                      x=0.2, y=0.05, width=0.65, height=0.9,
                      opacity=0.95,
                      on_focus_lost_hide=True),
-            DropDown("browser", "qutebrowser",
+            DropDown("browser", "qutebrowser --config ~/.config/qutebrowser/no-daemon-config.py",
                      x=0.2, y=0.05, width=0.65, height=0.9,
                      opacity=0.95,
                      on_focus_lost_hide=True),
@@ -96,17 +104,27 @@ groups.append(
                      x=0.2, y=0.05, width=0.65, height=0.9,
                      opacity=1,
                      on_focus_lost_hide=True),
+            DropDown("msg", "signal",
+                     x=0.2, y=0.05, width=0.65, height=0.9,
+                     opacity=1,
+                     on_focus_lost_hide=True),
         ])
 )
 
-keys.append(Key([mod], '1', lazy.group['scratchpad'].dropdown_toggle('browser')))
-keys.append(Key([mod], '2', lazy.group['scratchpad'].dropdown_toggle('notes')))
-keys.append(Key([mod], '3', lazy.group['scratchpad'].dropdown_toggle('vi')))
-keys.append(Key([mod], '4', lazy.group['scratchpad'].dropdown_toggle('term')))
-keys.append(Key([mod], '5', lazy.group['scratchpad'].dropdown_toggle('torrent')))
-keys.append(Key([mod], '6', lazy.group['scratchpad'].dropdown_toggle('audio')))
-keys.append(Key([mod], '7', lazy.group['scratchpad'].dropdown_toggle('music')))
-keys.append(Key([mod], '8', lazy.group['scratchpad'].dropdown_toggle('files')))
+numkey_dropdowns = [
+    lazy.group['scratchpad'].dropdown_toggle('py'),
+    lazy.group['scratchpad'].dropdown_toggle('vi'),
+    lazy.group['scratchpad'].dropdown_toggle('notes'),
+    lazy.group['scratchpad'].dropdown_toggle('term'),
+    lazy.group['scratchpad'].dropdown_toggle('torrent'),
+    lazy.group['scratchpad'].dropdown_toggle('audio'),
+    lazy.group['scratchpad'].dropdown_toggle('music'),
+    lazy.group['scratchpad'].dropdown_toggle('files'),
+    lazy.group['scratchpad'].dropdown_toggle('msg'),
+]
+
+for number, dropdown in enumerate(numkey_dropdowns, start=1):
+    keys.append(Key([mod], str(number), dropdown))
 
 with open('/home/mimi/.cache/wal/colors.json') as f:
     colorscheme = json.load(f)
@@ -115,10 +133,10 @@ backgr = colorscheme['special']['background']
 foregr = colorscheme['special']['foreground']
 color1 = colorscheme['colors']['color1']
 color2 = colorscheme['colors']['color6']
-color3 = colorscheme['colors']['color2']
+color3 = colorscheme['colors']['color8']
 
 layouts = [
-    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=color1, border_normal=backgr ),
+    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=color2, border_normal=backgr ),
     layout.Max(),
 ]
 
@@ -142,7 +160,9 @@ screens = [
             ],
             50,
             background=backgr,
-            foreground=foregr
+            foreground=foregr,
+            #opacity=.7,
+
         ),
     ),
 ]
@@ -157,12 +177,7 @@ mouse = [
 ]
 
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
-main = None
 follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
     {'wmclass': 'confirm'},

@@ -1,3 +1,5 @@
 #!/bin/bash
 
-maim -u | tee ~/pics/scrots/"$(date -Iminutes).png" | xclip -selection clipboard -t image/png -i
+filename=~/pics/scrots/"$(date -Iminutes).png"
+scrot $filename
+xclip -selection clipboard -t image/png -i $filename 
