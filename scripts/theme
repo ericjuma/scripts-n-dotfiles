@@ -5,16 +5,19 @@ from sys import argv
 import shutil
 import os
 import random
-from pathlib import Path
+from pathlib import PosixPath as Path
+from subprocess import call
 
 
 def path(relative_path_string):
     return Path.expanduser(Path(relative_path_string))
 
 walcache = path('~/.cache/wal/')
-themepath = path('~/.config/wal/colorschemes')
+themepath = path('~/.config/wal/colorschemes/')
+wallpath = path('~/pics/')
 
-def notify(text):
+def log(text):
+    print(text)
     os.system(f"notify-send -t 10000 '{text}'")
 
 def record_theme_path(theme):
@@ -43,16 +46,22 @@ def tint(color, factor):
         [int(min(n * factor, 255)) for n in hex2rgb(color)]
     )
 
-def set_wallpaper(color):
+def set_wallcolor(color):
     factor = 0.90 if get_info("mode") == "dark" else 1.15
     tinted = tint(color, factor)
     os.system(f"convert -size 100x100 xc:{tinted} jpeg:- | feh --bg-scale -")
 
-def apply_theme(colors):
+def set_wallpaper(wall):
+    call(['feh', '--bg-fill', wall]) 
+
+def apply_theme(colors, wallpaper=None):
     assert type(colors) == dict
     wal.sequences.send(colors)
     wal.export.every(colors)
-    wallcolor("bg")
+    if type(wallpaper) is Path:
+        set_wallpaper(wallpaper)
+    else:
+        wallcolor("bg")
     wal.reload.env()
     restart_qtile()
 
@@ -64,39 +73,43 @@ def appreciate_theme(theme):
     new_path = theme.parent.parent / ('best-' + theme.parent.name) / theme.name
     shutil.copyfile(theme, new_path)
 
+def pickatrandom(l):
+    return random.choice(list(l))
+
+
 ################################################################################
 
 def wallcolor(colortype):
     colors = wal.colors.file(str(current_theme()))
     if (colortype == "bg"):
-        set_wallpaper(colors["special"]["background"])
+        set_wallcolor(colors["special"]["background"])
     elif (colortype == "gray"):
-        set_wallpaper(colors["colors"]["color8"])
+        set_wallcolor(colors["colors"]["color8"])
     else:
         colors = list(colors["special"].values()) + list(colors["colors"].values())
-        set_wallpaper(random.choice(colors))
+        set_wallcolor(random.choice(colors))
 
 def color_theme(theme_type):
     possible_themes = themepath.rglob(f'{theme_type}/*.json')
     theme = random.choice(list(possible_themes))
     
-    print(f'Theme: {theme}')
+    log(f'Theme: {theme}')
     record_theme_path(theme)
 
     theme_colors = wal.colors.file(str(theme))
-    apply_theme(theme_colors)
-    notify('theme set: {}'.format(theme.stem))
+    apply_theme(theme_colors, wallpaper=theme_colors)
+    log('theme set: {}'.format(theme.stem))
     os.system("wal --preview")
 
 def delete_current_theme():
     t = current_theme()
     delete_theme(t)
-    notify('theme deleted: {}'.format(t.stem))
+    log('theme deleted: {}'.format(t.stem))
 
 def appreciate_current_theme():
     t = current_theme()
     appreciate_theme(t)
-    notify('theme appreciated: {}'.format(t.stem))
+    log('theme appreciated: {}'.format(t.stem))
 
 def get_info(arg):
     if arg == 'mode':
@@ -110,19 +123,25 @@ def get_info(arg):
     elif arg == 'dirs':
         os.system('ls --color=auto ~/.config/wal/colorschemes')
 
-def wall_theme(wall_name, brightness, walls_path="~/pics/walls"):
-    walls = path(walls_path)
-
-    if wall_name == "random":
-        wall = random.choice(list(walls.iterdir()))
-    else:
-        wall = next(walls.glob(f"{wall_name}*"))
-
-    record_theme_path(wall)
-    brightness = "-l" if brightness in ["light", "l", "bright"] else ""
     backend = random.choice(["wal", "haishoku", "colorthief", "colorz"])
-    os.system(f"wal -i {wall} {brightness} --backend {backend}")
-    restart_qtile()
+
+def wall_theme(wall_type="random", wall_name="random", brightness="dark", backend="colorz"):
+
+    brightness = brightness in ["light", "l", "bright"]
+
+    if wall_type == "random":
+        possible_types = [p for p in wallpath.iterdir() if p.is_dir() and list(p.iterdir())]
+        wall_type = pickatrandom(possible_types).name
+    if wall_name == "random":
+        possible_walls = (wallpath/wall_type).iterdir()
+        wall_name = pickatrandom(possible_walls).name
+
+    wall = pickatrandom( (wallpath/wall_type).rglob(f"{wall_name}*") )
+
+    wall_colors = wal.colors.get(str(wall), brightness, backend)
+    apply_theme(wall_colors, wallpaper=wall)
+
+    log('theme set: {} from {}'.format(wall.stem, wall_type))
 
 def print_help():
     print('\n'.join([

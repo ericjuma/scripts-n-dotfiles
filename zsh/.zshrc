@@ -157,6 +157,7 @@ alias ra="ranger"
 path+=("$HOME/.local/bin")
 path+=("$HOME/scripts")
 path+=("$HOME/vimwig/devtools")
+path+=("/home/mimi/.gem/ruby/2.7.0/bin")
 export PATH
 
 # If not running interactively, don't do anything

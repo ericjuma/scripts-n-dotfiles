@@ -70,11 +70,11 @@ groups.append(
            #          on_focus_lost_hide=True),
             DropDown("py", "kitty python",
                      x=0.2, y=0.05, width=0.5, height=0.5,
-                     opacity=0.95,
+                     opacity=0.80,
                      on_focus_lost_hide=True),
             DropDown("term", "kitty",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.95,
+                     opacity=0.80,
                      on_focus_lost_hide=True),
             DropDown("browser", "qutebrowser --config ~/.config/qutebrowser/no-daemon-config.py",
                      x=0.2, y=0.05, width=0.65, height=0.9,
@@ -82,11 +82,11 @@ groups.append(
                      on_focus_lost_hide=True),
             DropDown("notes", "kitty nvim docs/karma.org",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.95,
+                     opacity=0.8,
                      on_focus_lost_hide=True),
             DropDown("vi", "kitty nvim",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=0.95,
+                     opacity=0.8,
                      on_focus_lost_hide=True),
             DropDown("torrent", "transmission-gtk",
                      x=0.2, y=0.05, width=0.65, height=0.9,
@@ -102,7 +102,7 @@ groups.append(
                      on_focus_lost_hide=True),
             DropDown("files", "kitty ranger",
                      x=0.2, y=0.05, width=0.65, height=0.9,
-                     opacity=1,
+                     opacity=0.8,
                      on_focus_lost_hide=True),
             DropDown("msg", "signal",
                      x=0.2, y=0.05, width=0.65, height=0.9,
@@ -136,7 +136,7 @@ color2 = colorscheme['colors']['color6']
 color3 = colorscheme['colors']['color8']
 
 layouts = [
-    layout.MonadTall( border_width=10, margin=80, ratio=.56, border_focus=color2, border_normal=backgr ),
+    layout.MonadTall( border_width=3, margin=80, ratio=.56, border_focus=color2, border_normal=backgr ),
     layout.Max(),
 ]
 
